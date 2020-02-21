@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Create student</title>
+</head>
+<body>
+<h1>Create Student</h1>
+<form id="form" method="post" action="/create_student">
+  <div>
+    <div>
+      <label for="name">Student name :</label>
+      <input type="text" name="name"/>
+    </div>
+
+    <div>
+      <label for="address">Student address :</label>
+      <input type="text" name="address"/>
+    </div> 
+    
+    <div>
+      <label for="phone">Student Phone :</label>
+      <input type="number" name="phone"/>
+    </div>
+    <input type="submit" value="Create Student"/>
+  </div>
+</form>
+<br>
+<br>
+<h2><a href="/students">Student List</a></h2>
+<br>
+<h2><a href="/">Home</a></h2>
+</body>
+</html>
