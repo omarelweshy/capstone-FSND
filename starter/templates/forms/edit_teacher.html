@@ -3,14 +3,24 @@
     <title>Edit Teacher</title>
 </head>
 <body>
-    <h1>Edit </h1>
-    {% for book in books %}
-    <p>{{book.title}}</p>
-    <form method="POST" action="./update">
-      <input type="hidden" value="{{book.title}}" name="oldtitle">
-      <input type="text" value="{{book.title}}" name="newtitle">
-      <input type="submit" value="Update">
-    </form>
-  {% endfor %}
+  <form class="form" method="post" action="">
+    <div>
+      <div>
+        <label for="name">Teacher name :</label>
+        <input type="text" name="name"/>
+      </div>
+  
+      <div>
+        <label for="address">Teacher address :</label>
+        <input type="text" name="address"/>
+      </div> 
+      
+      <div>
+        <label for="phone">Teacher Phone :</label>
+        <input type="number" name="phone"/>
+      </div>
+      <input type="submit" value="UPDATE Teacher"/>
+    </div>
+  </form>
 </body>
 </html>

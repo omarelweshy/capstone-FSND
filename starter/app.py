@@ -26,7 +26,6 @@ def create_app(test_config=None):
     students = Student.query.all()
     return render_template("pages/students.html", students=students)
 
-
   # POST teacher
   @app.route('/create_teacher', methods=['GET','POST'])
   def create_teacher():
@@ -57,10 +56,23 @@ def create_app(test_config=None):
       student.insert()
     return render_template("forms/create_student.html")
 
+  # DELETE teacher
+  @app.route('/delete_teacher/<int:id>', methods=['GET' ,'DELETE'])
+  def delete_teacher(id):
+    teacher = Teacher.query.filter(Teacher.id == id).one_or_none()
+    teacher.delete()
+    return render_template('pages/teacher_delete_success.html')
+
+  # DELETE student
+  @app.route('/delete_student/<int:id>', methods=['GET' ,'DELETE'])
+  def delete_student(id):
+    student = Student.query.filter(Student.id == id).one_or_none()
+    student.delete()
+    return render_template('pages/student_delete_success.html')
 
   # PATCH teacher
-  @app.route('/edit_teacher')
-  def edit_teacher():
+  @app.route('/teachers/<int:teacher_id>', methods=['GET', 'PATCH'])
+  def edit_teacher(teacher_id):
     return render_template("forms/edit_teacher.html")
 
   # PATCH student
@@ -69,14 +81,13 @@ def create_app(test_config=None):
     return render_template("forms/edit_student.html")
 
 
-  # DELETE teacher
-  @app.route('/delete_teacher/<id>', methods=['DELETE'])
-  def delete_teacher(id):
-    teacher = Teacher.query.filter_by(id=id).one_or_none()
-    teacher.delete()
-    return None
+  @app.errorhandler(404)
+  def not_found_error(error):
+      return render_template('errors/404.html'), 404
 
-  # DELETE student
+  @app.errorhandler(500)
+  def server_error(error):
+      return render_template('errors/500.html'), 500
   return app
 
 app = create_app()

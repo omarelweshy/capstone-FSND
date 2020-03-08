@@ -27,8 +27,8 @@ table, th, td {
     <td>{{student.address}}</td>
     <td>{{student.phone}}</td>
     <td>
-      <a href="/edit_teacher/{{teacher.id}}">EDIT</a>   
-      <a href="/delete_teacher/{{teacher.id}}">DELETE</a>
+      <form action="/delete_student/{{student.id}}" method="delete">
+        <input type="submit" value="DELETE" />
     </td>
   </tr>
   {% endfor %}
