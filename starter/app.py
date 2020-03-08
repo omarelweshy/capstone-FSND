@@ -3,6 +3,7 @@ from flask import Flask, request, abort, jsonify, render_template, Response, fla
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from models import setup_db, Teacher, Student
+from auth import AuthError, requires_auth
 
 def create_app(test_config=None):
   # create and configure the app
@@ -70,15 +71,15 @@ def create_app(test_config=None):
     student.delete()
     return render_template('pages/student_delete_success.html')
 
-  # PATCH teacher
-  @app.route('/teachers/<int:teacher_id>', methods=['GET', 'PATCH'])
-  def edit_teacher(teacher_id):
-    return render_template("forms/edit_teacher.html")
+  # # PATCH teacher
+  # @app.route('/teachers/<int:teacher_id>', methods=['GET', 'PATCH'])
+  # def edit_teacher(teacher_id):
+  #   return render_template("forms/edit_teacher.html")
 
-  # PATCH student
-  @app.route('/edit_student')
-  def edit_student():
-    return render_template("forms/edit_student.html")
+  # # PATCH student
+  # @app.route('/edit_student')
+  # def edit_student():
+  #   return render_template("forms/edit_student.html")
 
 
   @app.errorhandler(404)
