@@ -27,6 +27,9 @@ table, th, td {
     <td>{{teacher.address}}</td>
     <td>{{teacher.phone}}</td>
     <td>
+      <form action="http://google.com">
+        <input type="submit" value="Go to Google" />
+    </form>
       <a href="/edit_teacher/{{teacher.id}}">EDIT</a>   
       <a href="/delete_teacher/{{teacher.id}}">DELETE</a>
     </td>
