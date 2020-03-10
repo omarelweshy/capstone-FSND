@@ -25,82 +25,118 @@ def create_app(test_config=None):
   # GET teachers
   @app.route('/teachers', methods=['GET'])
   def get_teachers():
-    teachers = Teacher.query.all()
-    formatted_teachers = {teacher.id: teacher.name for teacher in teachers}
-    return jsonify ({
-      'tearcher': formatted_teachers,
-      'success': True,
-      'status_code': 200
-    })
+    try:
+      teachers = Teacher.query.all()
+      formatted_teachers = {teacher.id: teacher.name for teacher in teachers}
+      return jsonify ({
+        'tearcher': formatted_teachers,
+        'success': True,
+        'status_code': 200
+      })
+    except Exception:
+        abort(422)
 
   # GET students
   @app.route('/students')
   def get_students():
-    students = Student.query.all()
-    formatted_students = {student.id: student.name for student in students}
-    return jsonify ({
-      'students': formatted_students,
-      'success': True,
-      'status_code': 200
-    })
+    try:
+      students = Student.query.all()
+      formatted_students = {student.id: student.name for student in students}
+      return jsonify ({
+        'students': formatted_students,
+        'success': True,
+        'status_code': 200
+      })
+    except Exception:
+        abort(422)
 
   # POST teacher
   @app.route('/teachers', methods=['POST'])
   def create_teacher():
-    body = request.get_json()
-    name = body.get('name')
-    teacher = Teacher(name=name)
-    teacher.insert()
-    return jsonify ({
-      'success': True,
-      'status_code': 200
-    })
+    try:
+      body = request.get_json()
+      name = body.get('name')
+      teacher = Teacher(name=name)
+      teacher.insert()
+      return jsonify ({
+        'success': True,
+        'status_code': 200
+      })
+    except Exception:
+        abort(422)
 
   # POST student
   @app.route('/students', methods=['POST'])
   def create_student():
-    body = request.get_json()
-    name = body.get('name')
-    student = Student(name=name)
-    student.insert()
-    return jsonify ({
-      'success': True,
-      'status_code': 200
-    })
+    try:
+      body = request.get_json()
+      name = body.get('name')
+      student = Student(name=name)
+      student.insert()
+      return jsonify ({
+        'success': True,
+        'status_code': 200
+      })
+    except Exception:
+        abort(422)
 
   # DELETE teacher
   @app.route('/teachers/<int:id>', methods=['DELETE'])
   def delete_teacher(id):
-    teacher = Teacher.query.filter(Teacher.id == id).one_or_none()
-    teacher.delete()
-    return jsonify ({
-      'success': True,
-      'status_code': 200
-    })
-
+    try:
+      teacher = Teacher.query.filter(Teacher.id == id).one_or_none()
+      teacher.delete()
+      return jsonify ({
+        'success': True,
+        'status_code': 200
+      })
+    except Exception:
+        abort(422)
   # DELETE student
   @app.route('/students/<int:id>', methods=['DELETE'])
   def delete_student(id):
-    student = Student.query.filter(Student.id == id).one_or_none()
-    student.delete()
-    return jsonify ({
-      'success': True,
-      'status_code': 200
-    })
-
+    try:
+      student = Student.query.filter(Student.id == id).one_or_none()
+      student.delete()
+      return jsonify ({
+        'success': True,
+        'status_code': 200
+      })
+    except Exception:
+        abort(422)
   # PATCH teacher
   @app.route('/teachers/<int:id>', methods=['PATCH'])
   def edit_teacher(id):
-    body = request.get_json()
-    teacher = Teacher.query.filter_by(id=id).one_or_none()
-    new_name = body.get('name', None)
-    teacher.name = new_name
-    teacher.update()
-    return ({
-      'success': True,
-      'status_code': 200
-    })
+    try:
+      teacher = Teacher.query.filter_by(id=id).one_or_none()
+      body = request.get_json()
+      new_name = body["name"]
+      teacher.name = new_name
+      teacher.update()
+      return jsonify ({
+        'success': True,
+        'status_code': 200
+      })
+    except Exception:
+        abort(422)
 
+  # PATCH student
+  @app.route('/students/<int:id>', methods=['PATCH'])
+  def edit_student(id):
+    try:
+      student = Student.query.filter_by(id=id).one_or_none()
+      body = request.get_json()
+      new_name = body["name"]
+      student.name = new_name
+      student.update()
+      return jsonify ({
+        'success': True,
+        'status_code': 200
+      })
+    except Exception:
+        abort(422)
+        
+  # ERORR handlers
   @app.errorhandler(404)
   def not_found(error):
       return jsonify({

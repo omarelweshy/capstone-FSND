@@ -21,3 +21,9 @@ DELETE student
 curl -X DELETE http://127.0.0.1:5000/students/1
 
 PATCH teacher
+curl -X PATCH -H "Content-Type: application/json" -d '{"name": "Something else"}' http://127.0.0.1:5000/teachers/4
+
+PATCH student
+curl -X PATCH -H "Content-Type: application/json" -d '{"name": "Something else"}' http://127.0.0.1:5000/students/2
+
+
