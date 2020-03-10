@@ -92,6 +92,7 @@ def create_app(test_config=None):
       })
     except Exception:
         abort(422)
+        
   # DELETE student
   @app.route('/students/<int:id>', methods=['DELETE'])
   def delete_student(id):
@@ -104,6 +105,7 @@ def create_app(test_config=None):
       })
     except Exception:
         abort(422)
+
   # PATCH teacher
   @app.route('/teachers/<int:id>', methods=['PATCH'])
   def edit_teacher(id):
@@ -135,7 +137,7 @@ def create_app(test_config=None):
       })
     except Exception:
         abort(422)
-        
+
   # ERORR handlers
   @app.errorhandler(404)
   def not_found(error):

@@ -41,7 +41,89 @@ class SchoolTestCase(unittest.TestCase):
         data = json.loads(req.data)
         self.assertEqual(req.status_code, 200)
 
+    def test_post_teachers_200(self):
+        teacher = {
+            'name': 'Any name'
+        }
+        req = self.client().post('/teachers', json=teacher)
+        data = json.loads(req.data)
+        self.assertEqual(req.status_code, 200)
 
+    def test_post_teachers_422(self):
+        teacher = {
+            'phone': 'Any Number'
+        }
+        req = self.client().post('/teachers', json=teacher)
+        data = json.loads(req.data)
+        self.assertEqual(req.status_code, 422)
+
+    def test_post_students_200(self):
+        student = {
+            'name': 'Any name'
+        }
+        req = self.client().post('/students', json=student)
+        data = json.loads(req.data)
+        self.assertEqual(req.status_code, 200)
+
+    def test_post_students_422(self):
+        student = {
+            'phone': 'Any Number'
+        }
+        req = self.client().post('/students', json=student)
+        data = json.loads(req.data)
+        self.assertEqual(req.status_code, 422)
+
+    # def test_delete_teachers_200(self):
+    #     req = self.client().delete('/teachers/5')
+    #     data = json.loads(req.data)
+    #     self.assertEqual(req.status_code, 200)
+
+    # def test_delete_students_200(self):
+    #     req = self.client().delete('/students/5')
+    #     data = json.loads(req.data)
+    #     self.assertEqual(req.status_code, 200)
+
+    def test_delete_teachers_422(self):
+        req = self.client().delete('/teachers/10000')
+        data = json.loads(req.data)
+        self.assertEqual(req.status_code, 422)
+
+    def test_delete_students_422(self):
+        req = self.client().delete('/students/10000')
+        data = json.loads(req.data)
+        self.assertEqual(req.status_code, 422)
+
+    def test_patch_teachers_200(self):
+        teacher = {
+            'name': 'Any name'
+        }
+        req = self.client().patch('/teachers/4', json=teacher)
+        data = json.loads(req.data)
+        self.assertEqual(req.status_code, 200)
+
+    def test_patch_students_200(self):
+        student = {
+            'name': 'Any name'
+        }
+        req = self.client().patch('/students/11', json=student)
+        data = json.loads(req.data)
+        self.assertEqual(req.status_code, 200)
+
+    def test_patch_teachers_422(self):
+        teacher = {
+            'phone': 'Any num'
+        }
+        req = self.client().patch('/teachers/11', json=teacher)
+        data = json.loads(req.data)
+        self.assertEqual(req.status_code, 422)
+
+    def test_patch_students_422(self):
+        student = {
+            'phone': 'Any num'
+        }
+        req = self.client().patch('/students/11', json=student)
+        data = json.loads(req.data)
+        self.assertEqual(req.status_code, 422)
 # Make the tests conveniently executable
 if __name__ == "__main__":
     unittest.main()
