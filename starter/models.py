@@ -24,8 +24,6 @@ class Teacher(db.Model):
     __tablename__ = 'teacher'
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(120), nullable=False)
-    address = Column(String(120), nullable=False)
-    phone = Column(Integer, nullable=True)
 
     def insert(self):
         db.session.add(self)
@@ -43,8 +41,6 @@ class Student(db.Model):
     __tablename__ = 'student'
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(120), nullable=False)
-    address = Column(String(120), nullable=False)
-    phone = Column(Integer, nullable=True)
 
     def insert(self):
         db.session.add(self)

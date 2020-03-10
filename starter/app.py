@@ -2,8 +2,9 @@ import os
 from flask import Flask, request, abort, jsonify, render_template, Response, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+import json
 from models import setup_db, Teacher, Student
-from auth import AuthError, requires_auth
+#from auth import AuthError, requires_auth
 
 def create_app(test_config=None):
   # create and configure the app
@@ -11,84 +12,126 @@ def create_app(test_config=None):
   setup_db(app)
   CORS(app)
 
-  @app.route('/')
-  def index():
-    return render_template("pages/home.html")
+  @app.after_request
+  def after_request(response):
+      response.headers.add(
+          "Access-Control-Allow-Headers",
+          "Content-Type,Authorization,true")
+      response.headers.add(
+          "Access-Control-Allow-Methods",
+          "GET, PATCH, POST, DELETE")
+      return response
 
   # GET teachers
   @app.route('/teachers', methods=['GET'])
   def get_teachers():
     teachers = Teacher.query.all()
-    return render_template("pages/teachers.html", teachers=teachers)
+    formatted_teachers = {teacher.id: teacher.name for teacher in teachers}
+    return jsonify ({
+      'tearcher': formatted_teachers,
+      'success': True,
+      'status_code': 200
+    })
 
   # GET students
   @app.route('/students')
   def get_students():
     students = Student.query.all()
-    return render_template("pages/students.html", students=students)
+    formatted_students = {student.id: student.name for student in students}
+    return jsonify ({
+      'students': formatted_students,
+      'success': True,
+      'status_code': 200
+    })
 
   # POST teacher
-  @app.route('/create_teacher', methods=['GET','POST'])
+  @app.route('/teachers', methods=['POST'])
   def create_teacher():
-    if request.method == 'POST':
-      name = request.form['name']
-      address = request.form['address']
-      phone = request.form['phone']
-      teacher = Teacher(
-        name=name,
-        address=address,
-        phone=phone
-      )
-      teacher.insert()
-    return render_template("forms/create_teacher.html")
+    body = request.get_json()
+    name = body.get('name')
+    teacher = Teacher(name=name)
+    teacher.insert()
+    return jsonify ({
+      'success': True,
+      'status_code': 200
+    })
 
   # POST student
-  @app.route('/create_student', methods=['GET','POST',])
+  @app.route('/students', methods=['POST'])
   def create_student():
-    if request.method == 'POST':
-      name = request.form['name']
-      address = request.form['address']
-      phone = request.form['phone']
-      student = Student(
-        name=name,
-        address=address,
-        phone=phone
-      )
-      student.insert()
-    return render_template("forms/create_student.html")
+    body = request.get_json()
+    name = body.get('name')
+    student = Student(name=name)
+    student.insert()
+    return jsonify ({
+      'success': True,
+      'status_code': 200
+    })
 
   # DELETE teacher
-  @app.route('/delete_teacher/<int:id>', methods=['GET' ,'DELETE'])
+  @app.route('/teachers/<int:id>', methods=['DELETE'])
   def delete_teacher(id):
     teacher = Teacher.query.filter(Teacher.id == id).one_or_none()
     teacher.delete()
-    return render_template('pages/teacher_delete_success.html')
+    return jsonify ({
+      'success': True,
+      'status_code': 200
+    })
 
   # DELETE student
-  @app.route('/delete_student/<int:id>', methods=['GET' ,'DELETE'])
+  @app.route('/students/<int:id>', methods=['DELETE'])
   def delete_student(id):
     student = Student.query.filter(Student.id == id).one_or_none()
     student.delete()
-    return render_template('pages/student_delete_success.html')
+    return jsonify ({
+      'success': True,
+      'status_code': 200
+    })
 
-  # # PATCH teacher
-  # @app.route('/teachers/<int:teacher_id>', methods=['GET', 'PATCH'])
-  # def edit_teacher(teacher_id):
-  #   return render_template("forms/edit_teacher.html")
-
-  # # PATCH student
-  # @app.route('/edit_student')
-  # def edit_student():
-  #   return render_template("forms/edit_student.html")
-
+  # PATCH teacher
+  @app.route('/teachers/<int:id>', methods=['PATCH'])
+  def edit_teacher(id):
+    body = request.get_json()
+    teacher = Teacher.query.filter_by(id=id).one_or_none()
+    new_name = body.get('name', None)
+    teacher.name = new_name
+    teacher.update()
+    return ({
+      'success': True,
+      'status_code': 200
+    })
 
   @app.errorhandler(404)
-  def not_found_error(error):
-      return render_template('errors/404.html'), 404
+  def not_found(error):
+      return jsonify({
+          "success": False,
+          "error": 404,
+          "message": "resource not found"
+      }), 404
 
-  @app.errorhandler(500)
-  def server_error(error):
-      return render_template('errors/500.html'), 500
+  @app.errorhandler(422)
+  def unprocessable(error):
+      return jsonify({
+          "success": False,
+          "error": 422,
+          "message": "unprocessable"
+      }), 422
+
+  @app.errorhandler(400)
+  def bad_request(error):
+      return jsonify({
+          "success": False,
+          "error": 400,
+          "message": "Bad request"
+      }), 400
+
+  @app.errorhandler(405)
+  def method_not_allow(error):
+      return jsonify({
+          "success": False,
+          "error": 405,
+          "message": "Method not allow"
+      }), 405
   return app
 
 app = create_app()
