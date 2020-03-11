@@ -5,9 +5,9 @@ from jose import jwt
 from urllib.request import urlopen
 
 
-AUTH0_DOMAIN = '.auth0.com' # DOMAIN
+AUTH0_DOMAIN = 'omarcap.auth0.com'
 ALGORITHMS = ['RS256']
-API_AUDIENCE = '' # API AUDIENCE
+API_AUDIENCE = 'school'
 
 # AuthError Exception
 '''

@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import json
 from models import setup_db, Teacher, Student
-#from auth import AuthError, requires_auth
+from auth import AuthError, requires_auth
 
 def create_app(test_config=None):
   # create and configure the app
@@ -24,7 +24,8 @@ def create_app(test_config=None):
 
   # GET teachers
   @app.route('/teachers', methods=['GET'])
-  def get_teachers():
+  @requires_auth('get:teachers')
+  def get_teachers(payload):
     try:
       teachers = Teacher.query.all()
       formatted_teachers = {teacher.id: teacher.name for teacher in teachers}
@@ -38,7 +39,8 @@ def create_app(test_config=None):
 
   # GET students
   @app.route('/students')
-  def get_students():
+  @requires_auth('get:students')
+  def get_students(payload):
     try:
       students = Student.query.all()
       formatted_students = {student.id: student.name for student in students}
@@ -52,7 +54,8 @@ def create_app(test_config=None):
 
   # POST teacher
   @app.route('/teachers', methods=['POST'])
-  def create_teacher():
+  @requires_auth('post:teachers')
+  def create_teacher(payload):
     try:
       body = request.get_json()
       name = body.get('name')
@@ -67,7 +70,8 @@ def create_app(test_config=None):
 
   # POST student
   @app.route('/students', methods=['POST'])
-  def create_student():
+  @requires_auth('post:students')
+  def create_student(payload):
     try:
       body = request.get_json()
       name = body.get('name')
@@ -82,7 +86,8 @@ def create_app(test_config=None):
 
   # DELETE teacher
   @app.route('/teachers/<int:id>', methods=['DELETE'])
-  def delete_teacher(id):
+  @requires_auth('delete:teachers')
+  def delete_teacher(payload, id):
     try:
       teacher = Teacher.query.filter(Teacher.id == id).one_or_none()
       teacher.delete()
@@ -92,10 +97,11 @@ def create_app(test_config=None):
       })
     except Exception:
         abort(422)
-        
+
   # DELETE student
   @app.route('/students/<int:id>', methods=['DELETE'])
-  def delete_student(id):
+  @requires_auth('delete:students')
+  def delete_student(payload, id):
     try:
       student = Student.query.filter(Student.id == id).one_or_none()
       student.delete()
@@ -108,7 +114,8 @@ def create_app(test_config=None):
 
   # PATCH teacher
   @app.route('/teachers/<int:id>', methods=['PATCH'])
-  def edit_teacher(id):
+  @requires_auth('patch:teachers')
+  def edit_teacher(payload, id):
     try:
       teacher = Teacher.query.filter_by(id=id).one_or_none()
       body = request.get_json()
@@ -124,7 +131,8 @@ def create_app(test_config=None):
 
   # PATCH student
   @app.route('/students/<int:id>', methods=['PATCH'])
-  def edit_student(id):
+  @requires_auth('patch:students')
+  def edit_student(payload, id):
     try:
       student = Student.query.filter_by(id=id).one_or_none()
       body = request.get_json()
@@ -138,7 +146,7 @@ def create_app(test_config=None):
     except Exception:
         abort(422)
 
-  # ERORR handlers
+  # ERROR handlers
   @app.errorhandler(404)
   def not_found(error):
       return jsonify({
@@ -170,6 +178,14 @@ def create_app(test_config=None):
           "error": 405,
           "message": "Method not allow"
       }), 405
+
+  @app.errorhandler(AuthError)
+  def auth_error(auth_error):
+      return jsonify({
+          "success": False,
+          "error": auth_error.status_code,
+          "message": auth_error.error['description']
+      }), auth_error.status_code
   return app
 
 app = create_app()

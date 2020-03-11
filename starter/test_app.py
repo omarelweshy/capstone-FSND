@@ -124,6 +124,7 @@ class SchoolTestCase(unittest.TestCase):
         req = self.client().patch('/students/11', json=student)
         data = json.loads(req.data)
         self.assertEqual(req.status_code, 422)
+        
 # Make the tests conveniently executable
 if __name__ == "__main__":
     unittest.main()
