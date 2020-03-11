@@ -55,7 +55,7 @@ curl -X PATCH -H "Content-Type: application/json" -d '{"name": "Something else"}
 AUTH0_DOMAIN = 'omarcap.auth0.com'
 ALGORITHMS = ['RS256']
 API_AUDIENCE = 'school'
-CLIENT_DI = '84fHKL9mXnvUFv2j0YKxtPtdMR5Ehs4I'
+CLIENT_ID = '84fHKL9mXnvUFv2j0YKxtPtdMR5Ehs4I'
 redirect_uri= `http://127.0.0.1:5000/result`
 
 you can sign in with link and get access token form link
