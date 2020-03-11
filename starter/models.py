@@ -6,9 +6,11 @@ import json
 
 # database setting
 database_name = "school"
-database_path = "postgresql://{}:{}@{}/{}".format('omar', '010', 'localhost:5432', database_name)
+database_path = "postgresql://{}:{}@{}/{}".format(
+    'omar', '010', 'localhost:5432', database_name)
 
 db = SQLAlchemy()
+
 
 def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
@@ -20,6 +22,8 @@ def setup_db(app, database_path=database_path):
 # Models
 
 # Teacher
+
+
 class Teacher(db.Model):
     __tablename__ = 'teacher'
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -37,6 +41,8 @@ class Teacher(db.Model):
         db.session.commit()
 
 # Student
+
+
 class Student(db.Model):
     __tablename__ = 'student'
     id = Column(Integer, primary_key=True, autoincrement=True)

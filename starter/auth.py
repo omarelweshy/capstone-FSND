@@ -1,5 +1,5 @@
 import json
-from flask import request, _request_ctx_stack, abort
+from flask import request, abort
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
@@ -9,18 +9,11 @@ AUTH0_DOMAIN = 'omarcap.auth0.com'
 ALGORITHMS = ['RS256']
 API_AUDIENCE = 'school'
 
-# AuthError Exception
-'''
-AuthError Exception
-A standardized way to communicate auth failure modes
-'''
-
 
 class AuthError(Exception):
     def __init__(self, error, status_code):
         self.error = error
         self.status_code = status_code
-
 
 # Auth Header
 
@@ -132,7 +125,7 @@ def verify_decode_jwt(token):
             raise AuthError({
                 'code': 'invalid_claims',
                 'description': 'Incorrect claims. check the\
-                                 audience and issuer.'
+                                    audience and issuer.'
             }, 401)
         except Exception:
             raise AuthError({

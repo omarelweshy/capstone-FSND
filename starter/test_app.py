@@ -73,15 +73,15 @@ class SchoolTestCase(unittest.TestCase):
         data = json.loads(req.data)
         self.assertEqual(req.status_code, 422)
 
-    # def test_delete_teachers_200(self):
-    #     req = self.client().delete('/teachers/5')
-    #     data = json.loads(req.data)
-    #     self.assertEqual(req.status_code, 200)
+    def test_delete_teachers_200(self):
+        req = self.client().delete('/teachers/5')
+        data = json.loads(req.data)
+        self.assertEqual(req.status_code, 200)
 
-    # def test_delete_students_200(self):
-    #     req = self.client().delete('/students/5')
-    #     data = json.loads(req.data)
-    #     self.assertEqual(req.status_code, 200)
+    def test_delete_students_200(self):
+        req = self.client().delete('/students/5')
+        data = json.loads(req.data)
+        self.assertEqual(req.status_code, 200)
 
     def test_delete_teachers_422(self):
         req = self.client().delete('/teachers/10000')
@@ -124,7 +124,8 @@ class SchoolTestCase(unittest.TestCase):
         req = self.client().patch('/students/11', json=student)
         data = json.loads(req.data)
         self.assertEqual(req.status_code, 422)
-        
+
+
 # Make the tests conveniently executable
 if __name__ == "__main__":
     unittest.main()
