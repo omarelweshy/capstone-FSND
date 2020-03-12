@@ -122,3 +122,6 @@ dropdb school_test
 createdb school_test
 python test_flaskr.py
 ```
+
+### APP URL HEROK
+`https://omarschool.herokuapp.com/`
