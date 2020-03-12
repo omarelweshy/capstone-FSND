@@ -11,7 +11,7 @@ class SchoolTestCase(unittest.TestCase):
     def setUp(self):
         self.app = create_app()
         self.client = self.app.test_client
-        self.database_name = "school"
+        self.database_name = "school_test"
         self.database_path = "postgresql://{}:{}@{}/{}".format(
             'omar',
             '010',

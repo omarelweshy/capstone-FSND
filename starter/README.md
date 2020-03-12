@@ -30,26 +30,37 @@ Run `curl -X POST -H "Content-Type: application/json" -d '{"name": "Name Here"}'
 
 
 POST student
-
-`curl -X POST -H "Content-Type: application/json" -d '{"name": "omar"}' http://127.0.0.1:5000/students`
+- Posting a student
+- Take student name and return success 
+Run `curl -X POST -H "Content-Type: application/json" -d '{"name": "Name Here"}' http://127.0.0.1:5000/students`
 
 GET teachers
-curl -X GET http://127.0.0.1:5000/teachers
+- Get all teachers names
+Run `curl -X GET http://127.0.0.1:5000/teachers`
 
 GET students
-curl -X GET http://127.0.0.1:5000/students
+- Get all students names
+Run `curl -X GET http://127.0.0.1:5000/students`
 
 DELETE teacher
-curl -X DELETE http://127.0.0.1:5000/teachers/1
+- Delete teacher by id
+- Take id and return success 
+Run `curl -X DELETE http://127.0.0.1:5000/teachers/1`
 
 DELETE student
-curl -X DELETE http://127.0.0.1:5000/students/1
+- Delete student by id
+- Take id and return success 
+Run `curl -X DELETE http://127.0.0.1:5000/students/1`
 
 PATCH teacher
-curl -X PATCH -H "Content-Type: application/json" -d '{"name": "Something else"}' http://127.0.0.1:5000/teachers/4
+- Take data and id of teacher
+- Return success and patch teacher
+Run `curl -X PATCH -H "Content-Type: application/json" -d '{"name": "Something else"}' http://127.0.0.1:5000/teachers/1`
 
 PATCH student
-curl -X PATCH -H "Content-Type: application/json" -d '{"name": "Something else"}' http://127.0.0.1:5000/students/2
+- Take data and id of teacher
+- Return success and patch student
+Run `curl -X PATCH -H "Content-Type: application/json" -d '{"name": "Something else"}' http://127.0.0.1:5000/students/1`
 
 ### AUTHENTCATION
 
@@ -59,7 +70,7 @@ API_AUDIENCE = 'school'
 CLIENT_ID = '84fHKL9mXnvUFv2j0YKxtPtdMR5Ehs4I'
 redirect_uri= `http://127.0.0.1:5000/result`
 
-you can sign in with link and get access token form link
+you can sign in with link and get access token from link
 `https://omarcap.auth0.com/authorize?audience=school&response_type=token&client_id=84fHKL9mXnvUFv2j0YKxtPtdMR5Ehs4I&redirect_uri=http://127.0.0.1:5000/result`
 
 We have two roles
