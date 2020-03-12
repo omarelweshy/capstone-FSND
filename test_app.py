@@ -11,8 +11,30 @@ class SchoolTestCase(unittest.TestCase):
     def setUp(self):
         self.app = create_app()
         self.client = self.app.test_client
-        # TOKEN get pip 8 style Guide and Failure because of permissions in Test, When you change it, it will work..
-        self.token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik5VRkVSVVl4UTBFNFFUY3lSRGd4UkRrd01qRXdNemhHUVRGQ1JVRkdNRU13UkRFek1qUTROZyJ9.eyJpc3MiOiJodHRwczovL29tYXJjYXAuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVlNjc3YjlhNjBhY2FhMGQ3ZGVhYzY4NyIsImF1ZCI6InNjaG9vbCIsImlhdCI6MTU4NDAyMzA4OCwiZXhwIjoxNTg0MDMwMjg4LCJhenAiOiI4NGZIS0w5bVhudlVGdjJqMFlLeHRQdGRNUjVFaHM0SSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOnN0dWRlbnRzIiwiZGVsZXRlOnRlYWNoZXJzIiwiZ2V0OnN0dWRlbnRzIiwiZ2V0OnRlYWNoZXJzIiwicGF0Y2g6c3R1ZGVudHMiLCJwYXRjaDp0ZWFjaGVycyIsInBvc3Q6c3R1ZGVudHMiLCJwb3N0OnRlYWNoZXJzIl19.AcHRlBasEnk-bbp9sdxIgTdmwe_LMZiPsJ1nJQF5B2MjNjfBdj129Wl_JTilvkr-IfbVj88m9AalEUHEea6rEFuCyM_wfO3sbnvR6lNy1X5lPyPQbrL8IMTATeR0QSbrZtw2DnySCK-TEg_tV1C0xRELYKyTAS_1448fkvp1wf4t0mzHzGfXDKK9GxyOjRBJl4zV7asx6NmeX1yyO0Y475UVrEVw6KEild69inrZ9rXmCPRmHmbc20i6kzB0MEXyb5dXI0F-Bc7kNjt7e_OrHCk_ppP_6Q8Ox-w6awgmjbH78C6Eu7yrZ-JnwEY6Hw1bbYyOTg2g_EZaL_6gGN87yw"
+        # TOKEN get pip 8 style Guide and Failure because of permissions in
+        # Test, When you change it, it will work..
+        self.token = "eyJhbGciOiJSUzI1NiIsInR5cCI6Ikp\
+            XVCIsImtpZCI6Ik5VRkVSVVl4UTBFNFFUY3lSRGd4U\
+            kRrd01qRXdNemhHUVRGQ1JVRkdNRU13UkRFek1qUTROZyJ9\
+            .eyJpc3MiOiJodHRwczovL29tYXJjYXAuYXV0a\
+            DAuY29tLyIsInN1YiI6ImF1dGgwfDVlNjc3Y\
+            jlhNjBhY2FhMGQ3ZGVhYzY4NyIsImF1ZCI\
+            6InNjaG9vbCIsImlhdCI6MTU4NDAyMz\
+            A4OCwiZXhwIjoxNTg0MDMwMjg4L\
+            CJhenAiOiI4NGZIS0w5bVhudl\
+            VGdjJqMFlLeHRQdGRNUjVFa\
+            HM0SSIsInNjb3BlIjoiIiwi\
+            cGVybWlzc2lvbnMiOlsiZGVsZXRl\
+            OnN0dWRlbnRzIiwiZGVsZX\
+            RlOnRlYWNoZXJzIiwiZ2V0OnN0dWRlbnRzIiwiZ2V0OnRlYWNo\
+            ZXJzIiwicGF0Y2g6c3R1ZGVudHMiLCJwYXRjaDp0ZWFjaGVycyI\
+            sInBvc3Q6c3R1ZGVudHMiLCJwb3N0OnRlYWNoZXJzIl19.AcHRlB\
+            asEnk-bbp9sdxIgTdmwe_LMZiPsJ1nJQF5B2MjNjfBdj129Wl_JTi\
+            lvkr-IfbVj88m9AalEUHEea6rEFuCyM_wfO3sbnvR6lNy1X5lPyPQb\
+            rL8IMTATeR0QSbrZtw2DnySCK-TEg_tV1C0xRELYKyTAS_1448fkvp1w\
+            f4t0mzHzGfXDKK9GxyOjRBJl4zV7asx6NmeX1yyO0Y475UVrEVw6KEild69in\
+            rZ9rXmCPRmHmbc20i6kzB0MEXyb5dXI0F-Bc7kNjt7e_OrHCk_ppP_6Q8Ox-w6a\
+            wgmjbH78C6Eu7yrZ-JnwEY6Hw1bbYyOTg2g_EZaL_6gGN87yw"
         self.database_name = "school_test"
         self.database_path = "postgresql://{}:{}@{}/{}".format(
             'omar',
@@ -101,7 +123,7 @@ class SchoolTestCase(unittest.TestCase):
         req = self.client().delete('/teachers/5',
                                    headers={
                                        'Authorization': 'Bearer ' + self.token
-                                    })
+                                   })
         data = json.loads(req.data)
         self.assertEqual(req.status_code, 200)
 
@@ -109,7 +131,7 @@ class SchoolTestCase(unittest.TestCase):
         req = self.client().delete('/students/7',
                                    headers={
                                        'Authorization': 'Bearer ' + self.token
-                                       })
+                                   })
         data = json.loads(req.data)
         self.assertEqual(req.status_code, 200)
 
@@ -117,7 +139,7 @@ class SchoolTestCase(unittest.TestCase):
         req = self.client().delete('/teachers/10000',
                                    headers={
                                        'Authorization': 'Bearer ' + self.token
-                                       })
+                                   })
         data = json.loads(req.data)
         self.assertEqual(req.status_code, 401)
 
@@ -125,7 +147,7 @@ class SchoolTestCase(unittest.TestCase):
         req = self.client().delete('/students/10000',
                                    headers={
                                        'Authorization': 'Bearer ' + self.token
-                                       })
+                                   })
         data = json.loads(req.data)
         self.assertEqual(req.status_code, 401)
 

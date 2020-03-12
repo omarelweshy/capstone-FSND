@@ -1,5 +1,16 @@
 #### School Capstone Project 
-This project is for save data for a school
+
+### Motivation
+Welcome To our School :))
+This Project is for Get data for your school, Get Teachers and Students Create, Delete, Update ...etc.
+In Project you can stucture your data of school and make roles which allow you to control your permissions of users.
+From a technical side :
+    - Project have tests to ensure from endpoints
+    - Authentication system
+and more :)))
+Now you can explore
+I hope you like the project :)
+Let's EXPORLE !! 
 
 #### Getting Started
 Firstly, you should have python3 and as a recommend you can install Virtual Enviornment
@@ -28,39 +39,109 @@ POST teacher
 
 Run `curl -X POST -H "Content-Type: application/json" -d '{"name": "Name Here"}' http://127.0.0.1:5000/teachers`
 
+Response :
+{
+    "status_code": 200,
+    "success": true
+}
+--------------------------------------------------
 
 POST student
 - Posting a student
 - Take student name and return success 
+
 Run `curl -X POST -H "Content-Type: application/json" -d '{"name": "Name Here"}' http://127.0.0.1:5000/students`
+
+Response :
+{
+    "status_code": 200,
+    "success": true
+}
+--------------------------------------------------
 
 GET teachers
 - Get all teachers names
+
 Run `curl -X GET http://127.0.0.1:5000/teachers`
+
+Response :
+{
+    "status_code": 200,
+    "success": true,
+    "tearcher": {
+        "1": "omar",
+        "2": "Any name",
+        "3": "omar",
+        "4": "Anas",
+        "5": "Any name",
+    }
+}
+--------------------------------------------------
 
 GET students
 - Get all students names
 Run `curl -X GET http://127.0.0.1:5000/students`
+Response :
+{
+    "status_code": 200,
+    "success": true,
+    "tearcher": {
+        "1": "joe",
+        "2": "Anas",
+        "3": "omar",
+        "4": "Messi",
+    }
+}
+-------------------------------------------------
 
 DELETE teacher
 - Delete teacher by id
-- Take id and return success 
+- Take id and return success
+
 Run `curl -X DELETE http://127.0.0.1:5000/teachers/1`
+
+Response :
+{
+    "status_code": 200,
+    "success": true
+}
+-------------------------------------------------
 
 DELETE student
 - Delete student by id
 - Take id and return success 
 Run `curl -X DELETE http://127.0.0.1:5000/students/1`
 
+Response :
+{
+    "status_code": 200,
+    "success": true
+}
+-------------------------------------------------
+
 PATCH teacher
 - Take data and id of teacher
 - Return success and patch teacher
+
 Run `curl -X PATCH -H "Content-Type: application/json" -d '{"name": "Something else"}' http://127.0.0.1:5000/teachers/1`
+
+Response :
+{
+    "status_code": 200,
+    "success": true
+}
+-------------------------------------------------
 
 PATCH student
 - Take data and id of teacher
 - Return success and patch student
 Run `curl -X PATCH -H "Content-Type: application/json" -d '{"name": "Something else"}' http://127.0.0.1:5000/students/1`
+
+Response :
+{
+    "status_code": 200,
+    "success": true
+}
 
 ### AUTHENTCATION
 
@@ -102,17 +183,34 @@ password : Aa12345678900..
 
 ## Errors handling:
 
-Errors are returned as JSON objects in the following format:
+Errors are returned as JSON objects from endpoints fail in the following format:
+# 400
 {
     "success": False, 
     "error": , 400
     "message": "bad request"
 }
-The API will return three error types when requests fail:
 
-400: Bad Request
-404: Resource Not Found
-422: unprocessable
+# 405
+{
+    "success": False,
+    "error": 405,
+    "message": "Method not allow"
+}
+
+# 422
+{
+    "success": False,
+    "error": 422,
+    "message": "unprocessable"
+}
+
+# 404
+{
+    "success": False,
+    "error": 404,
+    "message": "resource not found"
+}
 
 
 ## Testing
