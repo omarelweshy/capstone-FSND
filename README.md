@@ -2,7 +2,7 @@
 
 ### Motivation
 Welcome To our School :))
-This Project is for Get data for your school, Get Teachers and Students Create, Delete, Update ...etc.
+This Project is for Get data for your school, Get Teachers, Students Create, Delete and Update ...etc.
 In Project you can stucture your data of school and make roles which allow you to control your permissions of users.
 From a technical side :
     - Project have tests to ensure from endpoints
@@ -10,7 +10,7 @@ From a technical side :
 and more :)))
 Now you can explore
 I hope you like the project :)
-Let's EXPORLE !! 
+Let's EXPLORE !! 
 
 #### Getting Started
 Firstly, you should have python3 and as a recommend you can install Virtual Enviornment
