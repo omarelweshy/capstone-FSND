@@ -11,7 +11,7 @@ class SchoolTestCase(unittest.TestCase):
     def setUp(self):
         self.app = create_app()
         self.client = self.app.test_client
-        # TOKEN get pip 8 style Guide and Failure because of permissions in
+        # TOKEN get Failure because of permissions in
         # Test, When you change it, it will work..
         self.token = "eyJhbGciOiJSUzI1NiIsInR5cCI6Ikp\
             XVCIsImtpZCI6Ik5VRkVSVVl4UTBFNFFUY3lSRGd4U\
