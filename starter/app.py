@@ -40,7 +40,7 @@ def create_app(test_config=None):
             abort(422)
 
     # GET students
-    @app.route('/students')
+    @app.route('/students', methods=['GET'])
     @requires_auth('get:students')
     def get_students(payload):
         try:
@@ -150,6 +150,14 @@ def create_app(test_config=None):
             abort(422)
 
     # ERROR handlers
+    @app.errorhandler(AuthError)
+    def auth_error(auth_error):
+        return jsonify({
+            "success": False,
+            "error": auth_error.status_code,
+            "message": auth_error.error['description']
+        }), auth_error.status_code
+
     @app.errorhandler(404)
     def not_found(error):
         return jsonify({
@@ -182,13 +190,6 @@ def create_app(test_config=None):
             "message": "Method not allow"
         }), 405
 
-    @app.errorhandler(AuthError)
-    def auth_error(auth_error):
-        return jsonify({
-            "success": False,
-            "error": auth_error.status_code,
-            "message": auth_error.error['description']
-        }), auth_error.status_code
     return app
 
 
